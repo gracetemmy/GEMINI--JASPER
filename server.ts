@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const port = process.env.PORT || 8080;
 
   // API routes
   app.get("/api/config", (req, res) => {
@@ -36,9 +36,9 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  app.listen(port, "0.0.0.0", () => {
+  console.log(`Server listening on port ${port}`);
+});
 }
 
 startServer();
