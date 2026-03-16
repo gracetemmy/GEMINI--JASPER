@@ -129,19 +129,11 @@ export const JasperAgent: React.FC = () => {
     setError(null);
     setIsConnecting(true);
     try {
-      let apiKey = process.env.GEMINI_API_KEY;
-      
-      // If API key is missing (happens in production builds on Cloud Run), fetch it from the server
-      if (!apiKey || apiKey === "undefined" || apiKey === "") {
-        console.log("API Key not found in process.env, fetching from server...");
-        try {
-          const response = await fetch('/api/config');
-          const config = await response.json();
-          apiKey = config.GEMINI_API_KEY;
-        } catch (err) {
-          console.error("Failed to fetch config from server:", err);
-        }
-      }
+      // Replace this string with your actual Google AI Studio key!
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBjtar1rCMvV0zO6X7-Zu0_HLVUExhUrEY";
+    
+    // Check if the next line already exists right below in your file. If not, add it:
+    const ai = new GoogleGenAI({ apiKey });
 
       if (!apiKey || apiKey === "undefined" || apiKey === "") {
         throw new Error("API Key not found. Please ensure GEMINI_API_KEY is set in the environment variables.");
