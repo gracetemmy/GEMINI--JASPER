@@ -130,7 +130,7 @@ export const JasperAgent: React.FC = () => {
     setIsConnecting(true);
     try {
       // Replace this string with your actual Google AI Studio key!
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBjtar1rCMvV0zO6X7-Zu0_HLVUExhUrEY";
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyAYO4DfI_pnO6QYmXrdrQwAeZCvvnxYVJs";
     
     // Check if the next line already exists right below in your file. If not, add it:
     const ai = new GoogleGenAI({ apiKey });
