@@ -133,7 +133,6 @@ export const JasperAgent: React.FC = () => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyAYO4DfI_pnO6QYmXrdrQwAeZCvvnxYVJs";
     
     // Check if the next line already exists right below in your file. If not, add it:
-    const ai = new GoogleGenAI({ apiKey });
 
       if (!apiKey || apiKey === "undefined" || apiKey === "") {
         throw new Error("API Key not found. Please ensure GEMINI_API_KEY is set in the environment variables.");
