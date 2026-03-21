@@ -10,6 +10,12 @@ const VOICE_OPTIONS = [
   { id: 'en-US-Neural2-F', label: 'Neural Female', geminiVoice: 'Zephyr' },
 ];
 
+const MODEL_OPTIONS = [
+  { id: 'gemini-2.5-flash-native-audio-preview-09-2025', label: 'Flash 2.5', description: 'Fast & efficient' },
+  { id: 'gemini-2.5-flash-exp-native-audio-thinking-dialog', label: 'Flash 2.5 Thinking', description: 'Advanced reasoning' },
+  { id: 'gemini-2.0-flash-live-001', label: 'Flash 2.0', description: 'Stable & reliable' },
+];
+
 export const JasperAgent: React.FC = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -26,6 +32,7 @@ export const JasperAgent: React.FC = () => {
   const [isThinking, setIsThinking] = useState(false);
   const [userTranscript, setUserTranscript] = useState("");
   const [selectedVoice, setSelectedVoice] = useState(VOICE_OPTIONS[1]); // Default to Studio Male
+  const [selectedModel, setSelectedModel] = useState(MODEL_OPTIONS[0]); // Default to Flash 2.5
   const [showHistory, setShowHistory] = useState(false);
   const [savedSessions, setSavedSessions] = useState<{ id: string, date: string, history: any[] }[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState(Math.random().toString(36).substr(2, 9));
@@ -141,7 +148,7 @@ export const JasperAgent: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey });
       
       const sessionPromise = ai.live.connect({
-        model: "gemini-2.5-flash-native-audio-preview-09-2025",
+        model: selectedModel.id,
         config: {
           responseModalities: [Modality.AUDIO],
           speechConfig: {
@@ -590,6 +597,31 @@ export const JasperAgent: React.FC = () => {
             <Sparkles className="w-4 h-4" />
             New Chat
           </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mr-2">Model:</span>
+          <div className="flex bg-zinc-900 p-1 rounded-full border border-zinc-800">
+            {MODEL_OPTIONS.map((model) => (
+              <button
+                key={model.id}
+                onClick={() => {
+                  setSelectedModel(model);
+                  if (isConnected) {
+                    setError("Model changed. Reconnect to apply.");
+                  }
+                }}
+                title={model.description}
+                className={`px-3 py-1.5 rounded-full text-[10px] font-bold transition-all ${
+                  selectedModel.id === model.id
+                    ? 'bg-white text-black shadow-lg'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                {model.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
